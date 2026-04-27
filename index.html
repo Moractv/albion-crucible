@@ -470,10 +470,7 @@ function parseJournal(html) {
     const { type, lbl } = missionType(name);
     const skip = isSkip(name);
 
-    cur.missions.push({
-      name, progression, niveau, ptsNext, ptsGot,
-      type, lbl, skip, levelMaxed, levelZero, levelInf
-    });
+    cur.missions.push({ name, progression, niveau, ptsNext, ptsGot, skip, levelMaxed, levelZero, levelInf });
   });
 
   return { timestamp, sections };
@@ -481,28 +478,28 @@ function parseJournal(html) {
 
 // ── PRIORITÉ ──────────────────────────────────────────────────────────────────────
 function priority(m) {
-  if (m.skip)        return 9; // toujours en bas
-  if (m.levelMaxed)  return 8; // fini
+  if (m.skip)       return 9;
+  if (m.levelMaxed) return 8;
   if (!m.progression) {
-    // pas de progression → soit fini, soit pas commencé
     if (m.niveau && isFinite(m.niveau.tot) && m.niveau.cur >= m.niveau.tot) return 8;
-    return 6;
+    return 9; // pas de progression trackable → comme skip
   }
   const pct = m.progression.pct;
-  if (pct === null) return 5; // infini, on ne peut pas estimer
+  if (pct === null) return m.ptsGot > 0 ? 2 : 9; // infini : en cours si pts gagnés
   if (pct >= 0.93) return 0;
   if (pct >= 0.70) return 1;
-  if (pct >= 0.01) return 2;  // En cours dès 1%
-  return 9;                    // 0% → skip
+  if (pct >= 0.01) return 2;
+  return 9; // 0% → non débuté = comme skip
 }
 
 function prioLabel(m) {
   const p = priority(m);
-  if (m.levelMaxed) return { lbl:'✅ Terminé',    cls:'b-maxed'  };
-  if (p === 0)      return { lbl:'⚡ Urgent',      cls:'b-urgent' };
-  if (p === 1)      return { lbl:'🔥 Efficace',    cls:'b-warn'   };
-  if (p === 2)      return { lbl:'✓ En cours',     cls:'b-good'   };
-  return                   { lbl:'Non débuté',     cls:'b-skip'   };
+  if (m.levelMaxed) return { lbl:'✅ Terminé',  cls:'b-maxed'  };
+  if (p === 9)      return { lbl:'Non débuté',   cls:'b-skip'   };
+  if (p === 0)      return { lbl:'⚡ Urgent',    cls:'b-urgent' };
+  if (p === 1)      return { lbl:'🔥 Efficace',  cls:'b-warn'   };
+  if (p === 2)      return { lbl:'✓ En cours',   cls:'b-good'   };
+  return                   { lbl:'Non débuté',   cls:'b-skip'   };
 }
 
 // ── RENDU ─────────────────────────────────────────────────────────────────────────
