@@ -255,9 +255,7 @@ function renderUrgent(sections) {
   const list = document.getElementById('urg-list');
   const urgents = [];
   sections.forEach(s => s.missions.forEach(m => {
-    if (isSkip(m.name)) return;
-    const lMaxed = m.niveau && m.niveau.tot !== null && isFinite(m.niveau.tot) && m.niveau.cur >= m.niveau.tot;
-    if (!lMaxed && m.progression && m.progression.pct !== null && m.progression.pct >= 0.93) {
+    if (!m.skip && !m.levelMaxed && m.progression && m.progression.pct !== null && m.progression.pct >= 0.90) {
       const rest = fmtNum(m.progression.tot - m.progression.cur);
       urgents.push(`<div class="urg-item">
         <div class="urg-dot"></div>
@@ -266,9 +264,14 @@ function renderUrgent(sections) {
       </div>`);
     }
   }));
-  el.style.display = urgents.length ? 'block' : 'none';
-  list.innerHTML = urgents.join('');
+  if (urgents.length) {
+    el.style.display = 'block';
+    list.innerHTML = urgents.join('');
+  } else {
+    el.style.display = 'none';
+  }
 }
+
 
 function getMissionType(m) {
   if (!m._mtype) m._mtype = missionType(m.name);
