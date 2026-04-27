@@ -490,21 +490,19 @@ function priority(m) {
   }
   const pct = m.progression.pct;
   if (pct === null) return 5; // infini, on ne peut pas estimer
-  if (pct >= 0.93)  return 0; // URGENT
-  if (pct >= 0.70)  return 1; // warn
-  if (pct >= 0.35)  return 2; // good
-  return m.levelZero ? 7 : 4;  // pas commencé ou faible
+  if (pct >= 0.93) return 0;
+  if (pct >= 0.70) return 1;
+  if (pct >= 0.01) return 2;  // En cours dès 1%
+  return 9;                    // 0% → skip
 }
 
 function prioLabel(m) {
   const p = priority(m);
-  if (m.levelMaxed)  return { lbl:'Terminé', cls:'b-maxed' };
-  if (m.skip)        return { lbl:'Skip',    cls:'b-skip'  };
-  if (p === 0)       return { lbl:'⚡ Urgent', cls:'b-urgent' };
-  if (p === 1)       return { lbl:'🔥 Efficace',cls:'b-warn' };
-  if (p === 2)       return { lbl:'✓ En cours', cls:'b-good' };
-  if (p >= 6)        return { lbl:'—',          cls:'b-low'  };
-  return               { lbl:'Long terme',  cls:'b-low'  };
+  if (m.levelMaxed) return { lbl:'✅ Terminé',    cls:'b-maxed'  };
+  if (p === 0)      return { lbl:'⚡ Urgent',      cls:'b-urgent' };
+  if (p === 1)      return { lbl:'🔥 Efficace',    cls:'b-warn'   };
+  if (p === 2)      return { lbl:'✓ En cours',     cls:'b-good'   };
+  return                   { lbl:'Non débuté',     cls:'b-skip'   };
 }
 
 // ── RENDU ─────────────────────────────────────────────────────────────────────────
