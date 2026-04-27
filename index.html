@@ -492,7 +492,7 @@ function priority(m) {
   if (pct === null) return 5; // infini, on ne peut pas estimer
   if (pct >= 0.93)  return 0; // URGENT
   if (pct >= 0.70)  return 1; // warn
-  if (pct >= 0.35)  return 2; // good
+  if (pct >= 0.01)  return 2; // good
   return m.levelZero ? 7 : 4;  // pas commencé ou faible
 }
 
