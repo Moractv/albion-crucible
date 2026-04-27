@@ -690,17 +690,8 @@ function renderRow(m) {
   }
 
   // ── STATUT (inclut Long terme) ────────────────────────────────────────────
-  const prio = priority(m);
-  let statusLbl, statusCls;
-  if (m.levelMaxed)  { statusLbl = '✅ Terminé';   statusCls = 'b-maxed'; }
-  else if (m.skip)   { statusLbl = 'Skip';          statusCls = 'b-skip'; }
-  else if (prio===0) { statusLbl = '⚡ Urgent';     statusCls = 'b-urgent'; }
-  else if (prio===1) { statusLbl = '🔥 Efficace';   statusCls = 'b-warn'; }
-  else if (prio===2) { statusLbl = '✓ En cours';    statusCls = 'b-good'; }
-  else if (prio>=6)  { statusLbl = '—';             statusCls = 'b-low'; }
-  else               { statusLbl = 'Long terme';    statusCls = 'b-low'; }
+  const { lbl: statusLbl, cls: statusCls } = prioLabel(m);
   const statusBadge = `<span class="badge ${statusCls}">${statusLbl}</span>`;
-
   // ── POINTS ────────────────────────────────────────────────────────────────
   const ptsGotHtml  = m.ptsGot  > 0 ? `<span class="pts-pos">${m.ptsGot}</span>`  : `<span class="pts-zero">—</span>`;
   const ptsNextHtml = m.ptsNext > 0 ? `<span style="color:var(--blue)">+${m.ptsNext}</span>` : `<span class="pts-zero">—</span>`;
