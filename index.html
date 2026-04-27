@@ -503,7 +503,7 @@ function prioLabel(m) {
   if (p === 0)       return { lbl:'⚡ Urgent', cls:'b-urgent' };
   if (p === 1)       return { lbl:'🔥 Efficace',cls:'b-warn' };
   if (p === 2)       return { lbl:'✓ En cours', cls:'b-good' };
-  if (p >= 6)        return { lbl:'—',          cls:'b-low'  };
+  if (p >= 6)        return { lbl:'Non débuté',          cls:'b-low'  };
   return               { lbl:'Long terme',  cls:'b-low'  };
 }
 
