@@ -481,28 +481,29 @@ function parseJournal(html) {
 
 // ── PRIORITÉ ──────────────────────────────────────────────────────────────────────
 function priority(m) {
-  if (m.skip)        return 9; // toujours en bas
-  if (m.levelMaxed)  return 8; // fini
+  if (m.skip)       return 9;  // vrai skip → —
+  if (m.levelMaxed) return 8;
   if (!m.progression) {
-    // pas de progression → soit fini, soit pas commencé
     if (m.niveau && isFinite(m.niveau.tot) && m.niveau.cur >= m.niveau.tot) return 8;
-    return 6;
+    return 7; // pas de progression → Non débuté
   }
   const pct = m.progression.pct;
-  if (pct === null) return 5; // infini, on ne peut pas estimer
+  if (pct === null) return m.ptsGot > 0 ? 2 : 7; // infini sans pts → Non débuté
   if (pct >= 0.93) return 0;
   if (pct >= 0.70) return 1;
-  if (pct >= 0.01) return 2;  // En cours dès 1%
-  return 9;                    // 0% → skip
+  if (pct >= 0.01) return 2;
+  return 7; // 0% → Non débuté
 }
 
 function prioLabel(m) {
   const p = priority(m);
-  if (m.levelMaxed) return { lbl:'✅ Terminé',    cls:'b-maxed'  };
-  if (p === 0)      return { lbl:'⚡ Urgent',      cls:'b-urgent' };
-  if (p === 1)      return { lbl:'🔥 Efficace',    cls:'b-warn'   };
-  if (p === 2)      return { lbl:'✓ En cours',     cls:'b-good'   };
-  return                   { lbl:'Non débuté',     cls:'b-skip'   };
+  if (m.levelMaxed) return { lbl:'✅ Terminé',  cls:'b-maxed'  };
+  if (p === 9)      return { lbl:'—',            cls:'b-skip'   }; // vrai skip
+  if (p === 0)      return { lbl:'⚡ Urgent',    cls:'b-urgent' };
+  if (p === 1)      return { lbl:'🔥 Efficace',  cls:'b-warn'   };
+  if (p === 2)      return { lbl:'✓ En cours',   cls:'b-good'   };
+  if (p === 7)      return { lbl:'Non débuté',   cls:'b-low'    };
+  return                   { lbl:'—',            cls:'b-skip'   };
 }
 
 // ── RENDU ─────────────────────────────────────────────────────────────────────────
