@@ -213,12 +213,12 @@ function priority(m) {
 function prioLabel(m) {
   const p = priority(m);
   if (m.levelMaxed) return { lbl:'✅ Terminé',  cls:'b-maxed'  };
-  if (p === 9)      return { lbl:'—',            cls:'b-skip'   };
+  if (p === 9)      return { lbl:'Skip',            cls:'b-skip'   };
   if (p === 0)      return { lbl:'⚡ Urgent',    cls:'b-urgent' };
   if (p === 1)      return { lbl:'🔥 Efficace',  cls:'b-warn'   };
   if (p === 2)      return { lbl:'✓ En cours',   cls:'b-good'   };
   if (p === 7)      return { lbl:'Non débuté',   cls:'b-low'    };
-  return                   { lbl:'—',            cls:'b-skip'   };
+  return                   { lbl:'Skip',            cls:'b-skip'   };
 }
 
 let DATA = null;
