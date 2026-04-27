@@ -729,6 +729,47 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('total-pts').textContent   = '—';
   }
 });
+
+  // ── AUTO-REFRESH GITHUB PAGES ─────────────────────────────────────────────
+let lastTimestamp = null;
+
+async function checkForUpdates() {
+  try {
+    // Recharge le fichier avec un cache-buster pour forcer GitHub à servir la version fraîche
+    const r = await fetch(location.href + '?t=' + Date.now(), {
+      cache: 'no-store'
+    });
+    const html = await r.text();
+
+    // Extraire le timestamp depuis le HTML rechargé
+    const match = html.match(/\"timestamp\":\"([^\"]+)\"/);
+    if (!match) return;
+
+    const newTimestamp = match[1];
+
+    if (lastTimestamp === null) {
+      // Premier chargement — mémoriser le timestamp actuel
+      lastTimestamp = newTimestamp;
+      return;
+    }
+
+    if (newTimestamp !== lastTimestamp) {
+      // Nouvelles données détectées → recharger la page
+      lastTimestamp = newTimestamp;
+      location.reload();
+    }
+  } catch(_) {}
+}
+
+// Vérifier toutes les 2 minutes
+setInterval(checkForUpdates, 2 * 60 * 1000);
+
+// Initialiser le timestamp au chargement
+window.addEventListener('DOMContentLoaded', () => {
+  if (INJECTED_DATA && INJECTED_DATA.timestamp) {
+    lastTimestamp = INJECTED_DATA.timestamp;
+  }
+});
 </script>
 </body>
 </html>
