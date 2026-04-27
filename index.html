@@ -624,7 +624,7 @@ function renderMissions() {
 function renderRow(m) {
   // Recompute derived fields from JSON data
   const t = getMissionType(m);
-  if (m.skip === undefined) m.skip = isSkip(m.name);
+  m.skip = isSkip(m.name);
   if (m.levelMaxed === undefined) {
     const niv = m.niveau;
     m.levelMaxed = niv && niv.tot !== null && niv.tot !== undefined && isFinite(niv.tot) && niv.cur >= niv.tot;
