@@ -598,14 +598,21 @@ function renderMissions() {
 
   // Trier
   allMissions.sort((a, b) => {
-    if (SORT === 'pct') {
-      const pa = a.progression?.pct ?? -1;
-      const pb = b.progression?.pct ?? -1;
-      return pb - pa;
-    }
-    if (SORT === 'pts') return (b.ptsNext || 0) - (a.ptsNext || 0);
-    return priority(a) - priority(b);
-  });
+  if (SORT === 'pct') {
+    const pa = a.progression?.pct ?? -1;
+    const pb = b.progression?.pct ?? -1;
+    return pb - pa;
+  }
+  if (SORT === 'pts') return (b.ptsNext || 0) - (a.ptsNext || 0);
+
+  // Tri principal par priorité
+  const pa = priority(a);
+  const pb = priority(b);
+  if (pa !== pb) return pa - pb;
+
+  // Tiebreaker : alphabétique (surtout utile pour les skip en bas)
+  return a.name.localeCompare(b.name, 'fr');
+});
 
   const rows = allMissions.map(m => renderRow(m)).join('');
   out.innerHTML = `<table class="mtable">
