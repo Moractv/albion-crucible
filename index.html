@@ -481,30 +481,30 @@ function parseJournal(html) {
 
 // ── PRIORITÉ ──────────────────────────────────────────────────────────────────────
 function priority(m) {
-  if (m.skip)        return 9; // toujours en bas
-  if (m.levelMaxed)  return 8; // fini
-  if (!m.progression) {
-    // pas de progression → soit fini, soit pas commencé
-    if (m.niveau && isFinite(m.niveau.tot) && m.niveau.cur >= m.niveau.tot) return 8;
-    return 6;
-  }
+  if (m.skip)       return 9;
+  if (m.levelMaxed) return 8;
+
+  if (!m.progression) return 9; // pas de progression trackable → comme skip
+
   const pct = m.progression.pct;
-  if (pct === null) return 5; // infini, on ne peut pas estimer
-  if (pct >= 0.93)  return 0; // URGENT
-  if (pct >= 0.70)  return 1; // warn
-  if (pct >= 0.35)  return 2; // good
-  return m.levelZero ? 7 : 4;  // pas commencé ou faible
+
+  // Progression infinie (∞) — En cours si des points déjà gagnés, sinon skip
+  if (pct === null) return m.ptsGot > 0 ? 2 : 9;
+
+  if (pct >= 0.93) return 0;  // ⚡ Urgent
+  if (pct >= 0.70) return 1;  // 🔥 Efficace
+  if (pct > 0)     return 2;  // ✓ En cours — dès le premier % de progression
+  return 9;                    // 0% → comme skip
 }
 
 function prioLabel(m) {
   const p = priority(m);
-  if (m.levelMaxed)  return { lbl:'Terminé', cls:'b-maxed' };
-  if (m.skip)        return { lbl:'Skip',    cls:'b-skip'  };
-  if (p === 0)       return { lbl:'⚡ Urgent', cls:'b-urgent' };
-  if (p === 1)       return { lbl:'🔥 Efficace',cls:'b-warn' };
-  if (p === 2)       return { lbl:'✓ En cours', cls:'b-good' };
-  if (p >= 6)        return { lbl:'—',          cls:'b-low'  };
-  return               { lbl:'Long terme',  cls:'b-low'  };
+  if (m.levelMaxed) return { lbl:'✅ Terminé',  cls:'b-maxed'  };
+  if (p === 9)      return { lbl:'Skip',            cls:'b-skip'   };
+  if (p === 0)      return { lbl:'⚡ Urgent',    cls:'b-urgent' };
+  if (p === 1)      return { lbl:'🔥 Efficace',  cls:'b-warn'   };
+  if (p === 2)      return { lbl:'✓ En cours',   cls:'b-good'   };
+  return                   { lbl:'—',            cls:'b-low'    };
 }
 
 // ── RENDU ─────────────────────────────────────────────────────────────────────────
