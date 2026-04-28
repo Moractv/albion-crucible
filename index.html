@@ -7,27 +7,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:       #0b0d11;
-  --s1:       #13161c;
-  --s2:       #1a1e27;
-  --border:   rgba(255,255,255,0.07);
-  --border2:  rgba(255,255,255,0.13);
-  --text:     #e2e5eb;
-  --muted:    #5a6070;
-  --muted2:   #8892a4;
-  --urgent:   #f04040;
-  --warn:     #f5a623;
-  --good:     #30c97e;
-  --blue:     #4a8fff;
-  --purple:   #a97eff;
-  --gold:     #fbbf24;
-  --done:     #4ade80;
-  --mono: 'Space Mono', monospace;
-  --sans: 'DM Sans', sans-serif;
+  --bg:     #0b0d11;
+  --s1:     #13161c;
+  --s2:     #1a1e27;
+  --border: rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.13);
+  --text:   #e2e5eb;
+  --muted:  #5a6070;
+  --muted2: #8892a4;
+  --urgent: #f04040;
+  --warn:   #f5a623;
+  --good:   #30c97e;
+  --blue:   #4a8fff;
+  --purple: #a97eff;
+  --gold:   #fbbf24;
+  --done:   #4ade80;
+  --mono:   'Space Mono', monospace;
+  --sans:   'DM Sans', sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; }
 
+/* HEADER */
 header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 28px; border-bottom: 1px solid var(--border);
@@ -35,14 +36,13 @@ header {
 }
 .logo { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: var(--gold); }
 .logo span { color: var(--muted); }
-.header-right { display: flex; align-items: center; gap: 24px; }
-.total-block { text-align: right; }
 .total-val { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--gold); }
 .total-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-#last-update { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+#last-update { font-size: 11px; color: var(--muted); font-family: var(--mono); margin-top: 4px; }
 
 .wrap { max-width: 1300px; margin: 0 auto; padding: 24px 28px; }
 
+/* URGENCY */
 #urgency {
   background: linear-gradient(90deg, rgba(240,64,64,.1) 0%, transparent 100%);
   border: 1px solid rgba(240,64,64,.2); border-radius: 8px;
@@ -56,6 +56,7 @@ header {
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 .urg-pct { font-family: var(--mono); font-size: 11px; color: var(--urgent); margin-left: auto; white-space: nowrap; }
 
+/* STAT CARDS */
 .stat-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 24px; }
 @media(max-width:900px){ .stat-row { grid-template-columns: repeat(3,1fr); } }
 .stat-card { background: var(--s1); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; transition: border-color .15s; }
@@ -66,6 +67,54 @@ header {
 .sc-bar { height: 2px; background: var(--border); border-radius: 1px; margin-top: 8px; overflow: hidden; }
 .sc-bar-fill { height: 100%; border-radius: 1px; transition: width .5s ease; }
 
+/* RANKINGS */
+.rank-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; flex-wrap: wrap; gap: 8px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.rank-title { font-size: 10px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+.ts-block { display: flex; gap: 16px; align-items: center; }
+.ts-item { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.ts-lbl { font-size: 9px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.ts-ref .ts-lbl { color: var(--warn); }
+.ts-now .ts-lbl { color: var(--blue); }
+.ts-val { font-size: 11px; font-family: var(--mono); color: var(--muted2); }
+.ts-ref .ts-val { color: var(--warn); }
+.ts-now .ts-val { color: var(--blue); }
+.ts-divider { width: 1px; background: var(--border); align-self: stretch; }
+
+.rank-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 28px; }
+.rank-table th { font-size: 10px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding: 6px 10px; text-align: left; font-weight: 400; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.rank-table th.r { text-align: right; }
+.rank-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.rank-table tr:last-child td { border-bottom: none; }
+.rank-table tbody tr:hover td { background: var(--s1); }
+.rnum { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--muted); }
+.r1 { color: var(--gold); }
+.r2 { color: var(--muted2); }
+.r3 { color: #cd7f32; }
+.rguild { font-weight: 500; font-size: 13px; }
+.rcreator { font-size: 10px; color: var(--muted); font-family: var(--mono); margin-top: 1px; }
+.rpts { font-family: var(--mono); font-size: 12px; text-align: right; }
+.rref { font-family: var(--mono); font-size: 11px; text-align: right; color: var(--warn); opacity: .7; }
+.rdelta { font-family: var(--mono); font-size: 11px; text-align: right; }
+.dpos { color: var(--good); }
+.dzero { color: var(--muted); }
+.rpos { font-family: var(--mono); font-size: 10px; text-align: right; }
+.rup { color: var(--good); }
+.rdn { color: var(--urgent); }
+.req { color: var(--muted); }
+.rbar-wrap { width: 64px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; display: inline-block; vertical-align: middle; }
+.rbar-fill { height: 100%; border-radius: 2px; }
+.rank-mine td { background: rgba(169,126,255,.05); }
+.rank-mine td:first-child { border-left: 2px solid var(--purple); padding-left: 8px; }
+.rank-mine .rguild { color: var(--purple); }
+.rank-mine .rpts { color: var(--purple); }
+.mine-badge { font-size: 9px; font-family: var(--mono); color: var(--purple); margin-left: 4px; }
+.rank-sep td { padding: 4px 10px; text-align: center; font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--s1); border-bottom: 1px solid var(--border); letter-spacing: .08em; }
+
+/* FILTERS */
 .filter-row { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
 .filter-btn { padding: 5px 14px; background: transparent; border: 1px solid var(--border); color: var(--muted2); border-radius: 99px; font-family: var(--sans); font-size: 12px; cursor: pointer; transition: all .15s; }
 .filter-btn:hover { border-color: var(--border2); color: var(--text); }
@@ -74,6 +123,7 @@ header {
 .sort-lbl { font-size: 11px; color: var(--muted); margin-right: 4px; }
 select { background: var(--s2); border: 1px solid var(--border); color: var(--muted2); padding: 4px 10px; border-radius: 6px; font-family: var(--sans); font-size: 12px; outline: none; cursor: pointer; }
 
+/* MISSIONS TABLE */
 table.mtable { width: 100%; border-collapse: collapse; }
 .mtable th { font-size: 10px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 7px 12px; text-align: left; font-weight: 400; white-space: nowrap; border-bottom: 1px solid var(--border); }
 .mtable th.r { text-align: right; }
@@ -82,12 +132,14 @@ table.mtable { width: 100%; border-collapse: collapse; }
 .mtable tbody tr { transition: background .1s; }
 .mtable tbody tr:hover td { background: var(--s1); }
 
+/* Level pill */
 .lvl-pill { display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 10px; padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
-.lvl-maxed  { background: rgba(74,222,128,.1); color: var(--done); border: 1px solid rgba(74,222,128,.2); }
-.lvl-active { background: rgba(74,143,255,.08); color: var(--blue); border: 1px solid rgba(74,143,255,.18); }
-.lvl-zero   { background: rgba(90,96,112,.1); color: var(--muted); border: 1px solid var(--border); }
-.lvl-finite { background: rgba(245,166,35,.08); color: var(--warn); border: 1px solid rgba(245,166,35,.18); }
+.lvl-maxed  { background: rgba(74,222,128,.1);  color: var(--done);   border: 1px solid rgba(74,222,128,.2); }
+.lvl-active { background: rgba(74,143,255,.08); color: var(--blue);   border: 1px solid rgba(74,143,255,.18); }
+.lvl-zero   { background: rgba(90,96,112,.1);   color: var(--muted);  border: 1px solid var(--border); }
+.lvl-finite { background: rgba(245,166,35,.08); color: var(--warn);   border: 1px solid rgba(245,166,35,.18); }
 
+/* Progress */
 .prog-cell { display: flex; align-items: center; gap: 8px; min-width: 150px; }
 .prog-bar { width: 56px; height: 4px; background: var(--border); border-radius: 2px; flex-shrink: 0; overflow: hidden; }
 .prog-fill { height: 100%; border-radius: 2px; transition: width .4s ease; }
@@ -95,18 +147,21 @@ table.mtable { width: 100%; border-collapse: collapse; }
 .prog-pct { font-family: var(--mono); font-size: 10px; margin-left: 2px; }
 .prog-none { font-size: 11px; color: var(--muted); font-style: italic; }
 
+/* Badges */
 .badge { display: inline-block; font-size: 10px; font-family: var(--mono); padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
-.b-urgent  { background: rgba(240,64,64,.1);   color: var(--urgent); border: 1px solid rgba(240,64,64,.2); }
-.b-warn    { background: rgba(245,166,35,.1);  color: var(--warn);   border: 1px solid rgba(245,166,35,.2); }
-.b-good    { background: rgba(48,201,126,.08); color: var(--good);   border: 1px solid rgba(48,201,126,.18); }
-.b-maxed   { background: rgba(74,222,128,.08); color: var(--done);   border: 1px solid rgba(74,222,128,.18); }
-.b-low     { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-.b-skip    { background: transparent; color: var(--muted); border: 1px solid var(--border); opacity: .5; }
+.b-urgent  { background: rgba(240,64,64,.1);    color: var(--urgent); border: 1px solid rgba(240,64,64,.2); }
+.b-warn    { background: rgba(245,166,35,.1);   color: var(--warn);   border: 1px solid rgba(245,166,35,.2); }
+.b-good    { background: rgba(48,201,126,.08);  color: var(--good);   border: 1px solid rgba(48,201,126,.18); }
+.b-maxed   { background: rgba(74,222,128,.08);  color: var(--done);   border: 1px solid rgba(74,222,128,.18); }
+.b-low     { background: transparent;           color: var(--muted);  border: 1px solid var(--border); }
+.b-skip    { background: transparent;           color: var(--muted);  border: 1px solid var(--border); opacity: .5; }
+.b-limited { background: rgba(251,191,36,.08);  color: var(--gold);   border: 1px solid rgba(251,191,36,.18); }
+.b-auto    { background: rgba(74,143,255,.08);  color: var(--blue);   border: 1px solid rgba(74,143,255,.18); }
 
-.pts-col { font-family: var(--mono); font-size: 12px; text-align: right; }
-.pts-pos { color: var(--gold); }
+.pts-col  { font-family: var(--mono); font-size: 12px; text-align: right; }
+.pts-pos  { color: var(--gold); }
 .pts-zero { color: var(--muted); }
-.empty { padding: 40px; text-align: center; color: var(--muted); font-size: 13px; }
+.empty    { padding: 40px; text-align: center; color: var(--muted); font-size: 13px; }
 </style>
 </head>
 <body>
@@ -114,22 +169,29 @@ table.mtable { width: 100%; border-collapse: collapse; }
 <header>
   <div>
     <div class="logo">CRUCIBLE <span>// GUILD JOURNAL</span></div>
-    <div id="last-update" style="margin-top:4px">Aucune donnée chargée</div>
+    <div id="last-update">Aucune donnée chargée</div>
   </div>
-  <div class="header-right">
-    <div class="total-block">
-      <div class="total-lbl">points totaux</div>
-      <div class="total-val" id="total-pts">—</div>
-    </div>
+  <div style="text-align:right">
+    <div class="total-lbl">points totaux</div>
+    <div class="total-val" id="total-pts">—</div>
   </div>
 </header>
 
 <div class="wrap">
+
+  <!-- URGENCE -->
   <div id="urgency">
     <h3>⚡ Actions immédiates</h3>
     <div id="urg-list"></div>
   </div>
+
+  <!-- STAT CARDS -->
   <div class="stat-row" id="stats"></div>
+
+  <!-- CLASSEMENT -->
+  <div id="rankings-out"></div>
+
+  <!-- FILTRES -->
   <div class="filter-row" id="filters">
     <button class="filter-btn active" data-filter="all"      onclick="setfilter('all',this)">Tous</button>
     <button class="filter-btn"        data-filter="solo"     onclick="setfilter('solo',this)">Solo</button>
@@ -145,16 +207,24 @@ table.mtable { width: 100%; border-collapse: collapse; }
       <option value="pts">Points suivant</option>
     </select>
   </div>
+
+  <!-- MISSIONS -->
   <div id="missions-out"><div class="empty">En attente des données...</div></div>
+
 </div>
 
 <script>
 // DONNÉES INJECTÉES PAR LE SCRAPER — ne pas modifier manuellement
-const INJECTED_DATA = {"sections":[{"missions":[{"ptsNext":20,"progression":{"infinite":false,"tot":4500,"pct":0.4956,"cur":2230},"name":"Gagner des Points de Saison","ptsGot":40,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":0,"progression":null,"name":"Recruter des membres pour la Guilde","ptsGot":25,"niveau":{"infinite":false,"tot":1,"pct":1,"cur":1}},{"ptsNext":0,"progression":null,"name":"Acquérir une Île de Guilde","ptsGot":5,"niveau":{"infinite":false,"tot":1,"pct":1,"cur":1}},{"ptsNext":10,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Construire et améliorer un Repaire","ptsGot":0,"niveau":{"infinite":false,"tot":3,"pct":0,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Acquérir un Repaire Quartier Général","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Atteindre le Rang de Bronze","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}},{"ptsNext":150,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Atteindre le Rang d\u0027Argent","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}},{"ptsNext":200,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Atteindre le Rang d\u0027Or","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}},{"ptsNext":400,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Atteindre le Rang de Cristal","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}}],"name":"Guilde","totalPts":70},{"missions":[{"ptsNext":20,"progression":{"infinite":false,"tot":150,"pct":0,"cur":0},"name":"Gagner des matchs de l\u0027Arène 5v5 ou de l\u0027Arène Cristal","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":3}},{"ptsNext":10,"progression":{"infinite":false,"tot":2000000,"pct":0.2321,"cur":464250},"name":"Gagner des Points de Faction grâce aux Activités de la Guerre de Faction","ptsGot":0,"niveau":{"infinite":false,"tot":5,"pct":0,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.335,"cur":67},"name":"Vaincre des joueurs dans les Profondeurs","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":10,"progression":{"infinite":false,"tot":100,"pct":0.28,"cur":28},"name":"Vaincre des joueurs dans des Donjons Corrompus non létaux","ptsGot":10,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":100,"pct":0.41,"cur":41},"name":"Vaincre des joueurs dans des Donjons Corrompus létaux","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":200,"pct":0.205,"cur":41},"name":"Vaincre des joueurs dans des Hellgates non létales","ptsGot":10,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.01,"cur":2},"name":"Vaincre des joueurs dans des Hellgates létaux","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}}],"name":"PvP","totalPts":100},{"missions":[{"ptsNext":10,"progression":{"infinite":false,"tot":175,"pct":0.56,"cur":98},"name":"Terminer des Donjons Aléatoires Solo (N4 \u0026 N5)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.405,"cur":81},"name":"Terminer des Donjons Aléatoires Solo (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":10,"progression":{"infinite":false,"tot":150,"pct":0.1733,"cur":26},"name":"Terminer des Donjons Aléatoires de Groupe (N4 \u0026 N5)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":300,"pct":0.1233,"cur":37},"name":"Terminer des Donjons Aléatoires de Groupe (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":350,"pct":0.3886,"cur":136},"name":"Éliminer des Camps de Monstres dans Les Brumes (N5)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.7,"cur":140},"name":"Éliminer des Camps de Monstres dans les Brumes (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":50,"pct":0.68,"cur":34},"name":"Ouvrir des Coffres dans le Knightfall Abbey (N5)","ptsGot":30,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":3}},{"ptsNext":20,"progression":{"infinite":false,"tot":40,"pct":0.275,"cur":11},"name":"Ouvrir des Coffres dans le Knightfall Abbey (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":1000000,"pct":0.1859,"cur":185900},"name":"Gagner de la Réputation auprès de Brecilien","ptsGot":80,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":4}},{"ptsNext":20,"progression":{"infinite":false,"tot":160,"pct":0.3875,"cur":62},"name":"Ouvrir des Coffres solo dans les Routes d\u0027Avalon (vert)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":5,"progression":{"infinite":false,"tot":60,"pct":0.0667,"cur":4},"name":"Ouvrir des Coffres de groupe dans les Routes d\u0027Avalon (bleu)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":20,"pct":0,"cur":0},"name":"Ouvrir des Coffres de grand groupe dans les Routes d\u0027Avalon (or)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000000,"pct":0.0191,"cur":1910000},"name":"Gagner de la Renommée en éliminant des monstres dans les Donjons Statiques","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":20,"pct":0,"cur":0},"name":"Ouvrir des Coffres dans les Donjons Avaloniens","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}}],"name":"PvE","totalPts":190},{"missions":[{"ptsNext":20,"progression":{"infinite":false,"tot":70000000,"pct":0.459,"cur":32130000.000000004},"name":"Gagner de la Renommée en éliminant des monstres dans le monde ouvert","ptsGot":40,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":10,"progression":{"infinite":false,"tot":200,"pct":0.645,"cur":129},"name":"Éliminer des Camps de Monstres Dynamiques en monde ouvert (N4 \u0026 N5)","ptsGot":10,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.87,"cur":174},"name":"Éliminer des Camps de Monstres Dynamiques en monde ouvert (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":100,"pct":0.35,"cur":35},"name":"Éliminer des Cachettes de Boss de bas niveau (N5)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.115,"cur":23},"name":"Éliminer des Cachettes de Boss de haut niveau (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":200,"pct":0.03,"cur":6},"name":"Terminer des Missions de Pistage (N4 et N5)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":400,"pct":0,"cur":0},"name":"Terminer des Missions de Pistage (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":2,"pct":0.5,"cur":1},"name":"Gagner des Niveaux de Force grâce aux Activités de Contrebandier","ptsGot":20,"niveau":{"infinite":false,"tot":5,"pct":0.2,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":3,"pct":0.6667,"cur":2},"name":"Gagner des Niveaux de Force grâce aux Créatures de Cristal","ptsGot":40,"niveau":{"infinite":false,"tot":5,"pct":0.4,"cur":2}},{"ptsNext":20,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Gagner des Niveaux de Force grâce aux Noyaux de Puissance de Repaires","ptsGot":0,"niveau":{"infinite":false,"tot":5,"pct":0,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Gagner des niveaux de Force grâce aux Cristaux d\u0027Énergie de Territoire","ptsGot":0,"niveau":{"infinite":false,"tot":5,"pct":0,"cur":0}}],"name":"Monde Ouvert","totalPts":110},{"missions":[{"ptsNext":10,"progression":{"infinite":false,"tot":3500,"pct":0.0726,"cur":254},"name":"Attrapez quelques poissons","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.0236,"cur":7070},"name":"Gagner de la Renommée en récoltant de la Fibre (N2 à N5)","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":6}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.2741,"cur":82230},"name":"Gagner de la Renommée en récoltant du Minerai (N2 à N5)","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":6}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.1053,"cur":31590},"name":"Gagner de la Renommée en récoltant de la Peau (N2 à N5)","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":6}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.256,"cur":76810},"name":"Gagner de la Renommée en récoltant du Bois (N2 à N5)","ptsGot":130,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":13}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.0444,"cur":13330},"name":"Gagner de la Renommée en récoltant de la Pierre (N2 à N5)","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":6}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.4926,"cur":197040},"name":"Gagner de la Renommée en récoltant de la Fibre (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.1571,"cur":62830},"name":"Gagner de la Renommée en récoltant du Minerai (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.1898,"cur":75930},"name":"Gagner de la Renommée en récoltant de la Peau (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.1506,"cur":60230},"name":"Gagner de la Renommée en récoltant du Bois (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.4259,"cur":170370},"name":"Gagner de la Renommée en récoltant de la Pierre (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000,"pct":0,"cur":0},"name":"Gagner de la Renommée en récoltant de la Fibre en Parfait État (Enchantement .4)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000,"pct":0,"cur":0},"name":"Gagner de la Renommée en récoltant du Minerai en Parfait État (Enchantement .4)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000,"pct":0,"cur":0},"name":"Gagner de la Renommée en récoltant de la Peau en Parfait État (Enchantement .4)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000,"pct":0,"cur":0},"name":"Gagner de la Renommée en récoltant du Bois en Parfait État (Enchantement .4)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}}],"name":"Gathering","totalPts":490}],"timestamp":"28/04/2026 17:57:03","total":960};
+const INJECTED_DATA = {"sections":[{"missions":[{"ptsNext":20,"progression":{"infinite":false,"tot":4500,"pct":0.4956,"cur":2230},"name":"Gagner des Points de Saison","ptsGot":40,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":0,"progression":null,"name":"Recruter des membres pour la Guilde","ptsGot":25,"niveau":{"infinite":false,"tot":1,"pct":1,"cur":1}},{"ptsNext":0,"progression":null,"name":"Acquérir une Île de Guilde","ptsGot":5,"niveau":{"infinite":false,"tot":1,"pct":1,"cur":1}},{"ptsNext":10,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Construire et améliorer un Repaire","ptsGot":0,"niveau":{"infinite":false,"tot":3,"pct":0,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Acquérir un Repaire Quartier Général","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Atteindre le Rang de Bronze","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}},{"ptsNext":150,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Atteindre le Rang d\u0027Argent","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}},{"ptsNext":200,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Atteindre le Rang d\u0027Or","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}},{"ptsNext":400,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Atteindre le Rang de Cristal","ptsGot":0,"niveau":{"infinite":false,"tot":1,"pct":0,"cur":0}}],"name":"Guilde","totalPts":70},{"missions":[{"ptsNext":20,"progression":{"infinite":false,"tot":150,"pct":0,"cur":0},"name":"Gagner des matchs de l\u0027Arène 5v5 ou de l\u0027Arène Cristal","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":3}},{"ptsNext":10,"progression":{"infinite":false,"tot":2000000,"pct":0.2454,"cur":490710},"name":"Gagner des Points de Faction grâce aux Activités de la Guerre de Faction","ptsGot":0,"niveau":{"infinite":false,"tot":5,"pct":0,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.335,"cur":67},"name":"Vaincre des joueurs dans les Profondeurs","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":10,"progression":{"infinite":false,"tot":100,"pct":0.28,"cur":28},"name":"Vaincre des joueurs dans des Donjons Corrompus non létaux","ptsGot":10,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":100,"pct":0.42,"cur":42},"name":"Vaincre des joueurs dans des Donjons Corrompus létaux","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":200,"pct":0.205,"cur":41},"name":"Vaincre des joueurs dans des Hellgates non létales","ptsGot":10,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.01,"cur":2},"name":"Vaincre des joueurs dans des Hellgates létaux","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}}],"name":"PvP","totalPts":100},{"missions":[{"ptsNext":10,"progression":{"infinite":false,"tot":175,"pct":0.56,"cur":98},"name":"Terminer des Donjons Aléatoires Solo (N4 \u0026 N5)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.41,"cur":82},"name":"Terminer des Donjons Aléatoires Solo (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":10,"progression":{"infinite":false,"tot":150,"pct":0.1733,"cur":26},"name":"Terminer des Donjons Aléatoires de Groupe (N4 \u0026 N5)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":300,"pct":0.1233,"cur":37},"name":"Terminer des Donjons Aléatoires de Groupe (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":350,"pct":0.4086,"cur":143},"name":"Éliminer des Camps de Monstres dans Les Brumes (N5)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.71,"cur":142},"name":"Éliminer des Camps de Monstres dans les Brumes (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":50,"pct":0.68,"cur":34},"name":"Ouvrir des Coffres dans le Knightfall Abbey (N5)","ptsGot":30,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":3}},{"ptsNext":20,"progression":{"infinite":false,"tot":40,"pct":0.275,"cur":11},"name":"Ouvrir des Coffres dans le Knightfall Abbey (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":1000000,"pct":0.2011,"cur":201130},"name":"Gagner de la Réputation auprès de Brecilien","ptsGot":80,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":4}},{"ptsNext":20,"progression":{"infinite":false,"tot":160,"pct":0.3875,"cur":62},"name":"Ouvrir des Coffres solo dans les Routes d\u0027Avalon (vert)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":5,"progression":{"infinite":false,"tot":60,"pct":0.0667,"cur":4},"name":"Ouvrir des Coffres de groupe dans les Routes d\u0027Avalon (bleu)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":20,"pct":0,"cur":0},"name":"Ouvrir des Coffres de grand groupe dans les Routes d\u0027Avalon (or)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000000,"pct":0.0191,"cur":1910000},"name":"Gagner de la Renommée en éliminant des monstres dans les Donjons Statiques","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":20,"pct":0,"cur":0},"name":"Ouvrir des Coffres dans les Donjons Avaloniens","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}}],"name":"PvE","totalPts":190},{"missions":[{"ptsNext":20,"progression":{"infinite":false,"tot":70000000,"pct":0.4633,"cur":32430000},"name":"Gagner de la Renommée en éliminant des monstres dans le monde ouvert","ptsGot":40,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":10,"progression":{"infinite":false,"tot":200,"pct":0.645,"cur":129},"name":"Éliminer des Camps de Monstres Dynamiques en monde ouvert (N4 \u0026 N5)","ptsGot":10,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.875,"cur":175},"name":"Éliminer des Camps de Monstres Dynamiques en monde ouvert (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":100,"pct":0.35,"cur":35},"name":"Éliminer des Cachettes de Boss de bas niveau (N5)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":200,"pct":0.115,"cur":23},"name":"Éliminer des Cachettes de Boss de haut niveau (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":10,"progression":{"infinite":false,"tot":200,"pct":0.03,"cur":6},"name":"Terminer des Missions de Pistage (N4 et N5)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":400,"pct":0,"cur":0},"name":"Terminer des Missions de Pistage (N6+)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":2,"pct":0.5,"cur":1},"name":"Gagner des Niveaux de Force grâce aux Activités de Contrebandier","ptsGot":20,"niveau":{"infinite":false,"tot":5,"pct":0.2,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":3,"pct":0.6667,"cur":2},"name":"Gagner des Niveaux de Force grâce aux Créatures de Cristal","ptsGot":40,"niveau":{"infinite":false,"tot":5,"pct":0.4,"cur":2}},{"ptsNext":20,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Gagner des Niveaux de Force grâce aux Noyaux de Puissance de Repaires","ptsGot":0,"niveau":{"infinite":false,"tot":5,"pct":0,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":1,"pct":0,"cur":0},"name":"Gagner des niveaux de Force grâce aux Cristaux d\u0027Énergie de Territoire","ptsGot":0,"niveau":{"infinite":false,"tot":5,"pct":0,"cur":0}}],"name":"Monde Ouvert","totalPts":110},{"missions":[{"ptsNext":10,"progression":{"infinite":false,"tot":3500,"pct":0.0731,"cur":256},"name":"Attrapez quelques poissons","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":2}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.0324,"cur":9730},"name":"Gagner de la Renommée en récoltant de la Fibre (N2 à N5)","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":6}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.2961,"cur":88830},"name":"Gagner de la Renommée en récoltant du Minerai (N2 à N5)","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":6}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.1665,"cur":49950},"name":"Gagner de la Renommée en récoltant de la Peau (N2 à N5)","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":6}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.2753,"cur":82580},"name":"Gagner de la Renommée en récoltant du Bois (N2 à N5)","ptsGot":130,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":13}},{"ptsNext":10,"progression":{"infinite":false,"tot":300000,"pct":0.0541,"cur":16219.999999999998},"name":"Gagner de la Renommée en récoltant de la Pierre (N2 à N5)","ptsGot":60,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":6}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.4928,"cur":197110},"name":"Gagner de la Renommée en récoltant de la Fibre (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.1571,"cur":62830},"name":"Gagner de la Renommée en récoltant du Minerai (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.1908,"cur":76330},"name":"Gagner de la Renommée en récoltant de la Peau (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.1509,"cur":60350},"name":"Gagner de la Renommée en récoltant du Bois (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":400000,"pct":0.4259,"cur":170370},"name":"Gagner de la Renommée en récoltant de la Pierre (N6+)","ptsGot":20,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":1}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000,"pct":0,"cur":0},"name":"Gagner de la Renommée en récoltant de la Fibre en Parfait État (Enchantement .4)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000,"pct":0,"cur":0},"name":"Gagner de la Renommée en récoltant du Minerai en Parfait État (Enchantement .4)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000,"pct":0,"cur":0},"name":"Gagner de la Renommée en récoltant de la Peau en Parfait État (Enchantement .4)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}},{"ptsNext":20,"progression":{"infinite":false,"tot":100000,"pct":0,"cur":0},"name":"Gagner de la Renommée en récoltant du Bois en Parfait État (Enchantement .4)","ptsGot":0,"niveau":{"infinite":true,"tot":null,"pct":null,"cur":0}}],"name":"Gathering","totalPts":490}],"timestamp":"28/04/2026 18:27:13","total":960};
+const INJECTED_RANKINGS = $null
+const INJECTED_BASELINE = {"date":"2026-04-28","timestamp":"28/04/2026 18:28:28","guilds":{"value":[{"rank":1,"guildName":"Road to Exile","creatorName":"Zizaran","score":4710},{"rank":2,"guildName":"Burzyny","creatorName":"Diables","score":4630},{"rank":3,"guildName":"Dokodo","creatorName":"Youby4, ShojiFR","score":3840},{"rank":4,"guildName":"Instinct","creatorName":"Nozadah, Hexotik00","score":3690},{"rank":5,"guildName":"Frogwide","creatorName":"BagginsTV, KanonXO, jenny, SoBadStrange","score":3510},{"rank":6,"guildName":"Solary","creatorName":"Narkuss","score":3440},{"rank":7,"guildName":"GAGARAGOGO","creatorName":"RRaenee, Cordiseps","score":3410},{"rank":8,"guildName":"JOBLIFE","creatorName":"JLTomy, Fakemonster, Kada, Wati","score":3170},{"rank":9,"guildName":"LES GOBRIATES","creatorName":"GobGG, Alderiate","score":2860},{"rank":10,"guildName":"Expedition 60","creatorName":"revenant","score":2720},{"rank":11,"guildName":"POURFENDEURS","creatorName":"Galino","score":2480},{"rank":12,"guildName":"Lords of Strife","creatorName":"JoshStrifeHayes","score":2160},{"rank":13,"guildName":"Ecurie","creatorName":"Huzounet","score":1720},{"rank":14,"guildName":"IMBA","creatorName":"Metashi12","score":1600},{"rank":15,"guildName":"DOKDO","creatorName":"게임하는인기 (Inki), 박서림 (Seolim), 은가비 (Gabi), 호진 (Hojin)","score":1540},{"rank":16,"guildName":"lSinPiedadl","creatorName":"CAHOS_GAMING","score":1460},{"rank":17,"guildName":"Slowrunners","creatorName":"Icekei","score":1420},{"rank":18,"guildName":"Baloniarze","creatorName":"jaskol95, blackfireice, maailinh, ortis","score":1350},{"rank":19,"guildName":"Zakon Spellniksa","creatorName":"tamae_, spartiatix, smayro","score":1310},{"rank":20,"guildName":"BeachEnjoyers","creatorName":"DarthMicrotransaction, GhazzyTV","score":1260},{"rank":21,"guildName":"HustlinHitmans is back","creatorName":"NorgannonHH","score":1060},{"rank":22,"guildName":"Ibuprofen Chapter","creatorName":"bamki","score":1010},{"rank":23,"guildName":"Les 2 Blondasses","creatorName":"Lilith, CruellaDK","score":960},{"rank":24,"guildName":"Salario Atrasado Futebol Clube","creatorName":"mount, GalaxyyK","score":865},{"rank":25,"guildName":"ZEONCREW","creatorName":"Zeon","score":850},{"rank":26,"guildName":"RauMa36","creatorName":"Dương 404","score":850},{"rank":27,"guildName":"RL9GOAT","creatorName":"szzalony, zalewskyy_","score":790},{"rank":28,"guildName":"Pistawetya","creatorName":"Pisty","score":760},{"rank":29,"guildName":"StraightMogginHorseGirlCuties","creatorName":"kaisa, Mogsy","score":750},{"rank":30,"guildName":"Knights of Modzia","creatorName":"Datmodz","score":750},{"rank":31,"guildName":"Les Saucisses","creatorName":"Aiola","score":670},{"rank":32,"guildName":"Order of the Snake","creatorName":"spicysuhi_poe","score":625},{"rank":33,"guildName":"V de Volante","creatorName":"CapJoga, calango","score":540},{"rank":34,"guildName":"Rasmelcorp","creatorName":"Rasmelthor","score":470},{"rank":35,"guildName":"Nekotsu","creatorName":"ShakotsuVT, DannyLed","score":450},{"rank":36,"guildName":"ARCH0NS","creatorName":"EnemyN1","score":430},{"rank":37,"guildName":"P M G","creatorName":"paiemaegamers","score":405},{"rank":38,"guildName":"Beermix","creatorName":"cemka, BeastQT","score":385},{"rank":39,"guildName":"Kicking and Screaming","creatorName":"Bastila","score":375},{"rank":40,"guildName":"D4BAD","creatorName":"RaizQT, Goratha, Waggle, Carn","score":375},{"rank":41,"guildName":"Dropengers Random","creatorName":"cabolo, randomtopicgames","score":345},{"rank":42,"guildName":"GhostzGHG","creatorName":"ZeusGhostz","score":340},{"rank":43,"guildName":"HEXENDREIECK","creatorName":"arukori","score":305},{"rank":44,"guildName":"Rigor Morttis","creatorName":"Morttimer","score":295},{"rank":45,"guildName":"123qaz","creatorName":"UZRA (uzra), 狂暴小建 (Jian), (小舞 (nein1203), 小鹽 (doodooqvvq), 萌萌吃吃 (eat1025), 妖乖 (nicemonsteroh)","score":270},{"rank":46,"guildName":"TheGeekEntry","creatorName":"thegeekentry","score":215},{"rank":47,"guildName":"Right Arm Bovines","creatorName":"Cowsep, foggedftw2","score":210},{"rank":48,"guildName":"Die Graue Legion","creatorName":"Ratattitude","score":205},{"rank":49,"guildName":"Timbones","creatorName":"Josefa","score":200},{"rank":50,"guildName":"Los Champis","creatorName":"ReudigRuediger","score":185},{"rank":51,"guildName":"The Khronies","creatorName":"KhronosVII","score":175},{"rank":52,"guildName":"Warchimaniakos","creatorName":"Warchiwar","score":175},{"rank":53,"guildName":"Lunary","creatorName":"Sapeuh","score":170},{"rank":54,"guildName":"The purple Guard","creatorName":"drproof","score":165},{"rank":55,"guildName":"The Egg Cult","creatorName":"blueandqueenie","score":155},{"rank":56,"guildName":"Krakcult","creatorName":"Calamarei","score":155},{"rank":57,"guildName":"Los Becarios","creatorName":"AG Deivi","score":135},{"rank":58,"guildName":"TropaDoLima","creatorName":"wall_lima","score":125},{"rank":59,"guildName":"Huddel","creatorName":"FalganWoW","score":125},{"rank":60,"guildName":"Foyth","creatorName":"foythtv","score":95},{"rank":61,"guildName":"Shadows of Elune","creatorName":"automaticjak, emeelzia","score":95},{"rank":62,"guildName":"Los Golfos","creatorName":"apowow, souzacarlostv","score":95},{"rank":63,"guildName":"Crazy for Cats","creatorName":"mmariah","score":80},{"rank":64,"guildName":"Knights of the Old File","creatorName":"SaveFile17","score":65},{"rank":65,"guildName":"FourthWing","creatorName":"Aningning","score":65},{"rank":66,"guildName":"FantasyTeam","creatorName":"keikoreturns","score":55},{"rank":67,"guildName":"Crust Lords","creatorName":"TinyAsparagus","score":50},{"rank":68,"guildName":"TropinhaX","creatorName":"paulinhax","score":40},{"rank":69,"guildName":"UniqueZ","creatorName":"vento_ventania1","score":35},{"rank":70,"guildName":"MACROKINGS","creatorName":"courtesy","score":25},{"rank":71,"guildName":"Baerenbande","creatorName":"MrBaer","score":25},{"rank":72,"guildName":"Team Galaxy","creatorName":"eazykee, suri","score":25},{"rank":73,"guildName":"Avandalos","creatorName":"thalz","score":20},{"rank":74,"guildName":"MoraisHD","creatorName":"MoraisHD","score":20},{"rank":75,"guildName":"Fuer den Schmollgrind","creatorName":"skippi","score":20},{"rank":76,"guildName":"Sobreviventes de Albion","creatorName":"oabeljoga","score":15},{"rank":77,"guildName":"GDzada","creatorName":"GDzada","score":15},{"rank":78,"guildName":"Woot","creatorName":"afkwoot","score":15},{"rank":79,"guildName":"ClubHellFire","creatorName":"mano_imp","score":5},{"rank":80,"guildName":"TOP GLOBALES","creatorName":"Tentr4","score":5},{"rank":81,"guildName":"Frankitooow guild","creatorName":"frankitu","score":5},{"rank":82,"guildName":"PekSEGG","creatorName":"Karthas","score":5},{"rank":83,"guildName":"albioncontav","creatorName":"Tavrpgs","score":5},{"rank":84,"guildName":"Fedex Lieferservice","creatorName":"carnifexed","score":5},{"rank":85,"guildName":"Bonde do Piru Sem Freio","creatorName":"valdir__rp","score":0},{"rank":86,"guildName":"ChaoSunKnights","creatorName":"Ali3nSun","score":0}],"Count":86}};
 
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const MY_GUILD  = 'Les 2 Blondasses';
 const CAT_EMOJI = { 'PvP':'⚔️','PvE':'🐉','Monde Ouvert':'🌍','Gathering':'⛏️','Guilde':'🏰' };
 const CAT_COLOR = { 'PvP':'#f04040','PvE':'#30c97e','Monde Ouvert':'#4a8fff','Gathering':'#f5a623','Guilde':'#a97eff' };
 
+// ── HELPERS ───────────────────────────────────────────────────────────────────
 function fmtNum(n) {
   if (n === null || n === undefined || !isFinite(n)) return '∞';
   if (n >= 1e6) return (n/1e6).toFixed(2).replace(/\.?0+$/,'') + 'M';
@@ -162,46 +232,56 @@ function fmtNum(n) {
   return Math.round(n).toLocaleString('fr');
 }
 
+// ── CLASSIFICATION MISSIONS ───────────────────────────────────────────────────
 function missionType(name) {
-  if (/points de saison/i.test(name))           return { counts:[], filterKeys:[] };
-  if (/repaire|quartier général/i.test(name))   return { counts:[], filterKeys:[] };
+  if (/points de saison/i.test(name))            return { counts:[], filterKeys:[] };
+  if (/repaire|quartier général/i.test(name))    return { counts:[], filterKeys:[] };
   if (/rang de bronze|rang d.argent|rang d.or|rang de cristal/i.test(name)) return { counts:[], filterKeys:[] };
-  if (/arène|arena cristal/i.test(name))         return { counts:['5+'],         filterKeys:['5plus'] };
-  if (/corrompus létaux/i.test(name))            return { counts:['Solo'],       filterKeys:['solo'] };
-  if (/profondeurs/i.test(name))                 return { counts:['Duo','Trio'],filterKeys:['duo','duo-trio'] };
-  if (/corrompus non létaux/i.test(name))        return { counts:['Solo'],       filterKeys:['solo'] };
-  if (/hellgates/i.test(name))                   return { counts:['Duo','5+'],  filterKeys:['duo','5plus'] };
-  if (/donjons aléatoires solo/i.test(name))     return { counts:['Solo'],       filterKeys:['solo'] };
-  if (/donjons aléatoires de groupe/i.test(name))return { counts:['5+'],         filterKeys:['5plus'] };
-  if (/brumes/i.test(name))                      return { counts:['Solo','Duo'],filterKeys:['solo','duo'] };
-  if (/knightfall/i.test(name))                  return { counts:['Solo','Duo'],filterKeys:['solo','duo'] };
-  if (/brecilien/i.test(name))                   return { counts:['Solo','Duo'],filterKeys:['solo','duo'] };
-  if (/avalon.*vert|vert.*avalon/i.test(name))   return { counts:['Solo'],       filterKeys:['solo'] };
-  if (/avalon.*bleu|bleu.*avalon/i.test(name))   return { counts:['5+'],         filterKeys:['5plus'] };
-  if (/avalon.*or|or.*avalon/i.test(name))       return { counts:['5+'],         filterKeys:['5plus'] };
-  if (/donjons statiques/i.test(name))           return { counts:['5+'],         filterKeys:['5plus'] };
-  if (/donjons avaloniens/i.test(name))          return { counts:['Raid'],       filterKeys:['raid'] };
-  if (/camps de monstres dynamiques/i.test(name))return { counts:['Solo','5+'], filterKeys:['solo','5plus'] };
-  if (/cachette de boss/i.test(name))            return { counts:['Solo','5+'], filterKeys:['solo','5plus'] };
-  if (/missions de pistage/i.test(name))         return { counts:['Solo','5+'], filterKeys:['solo','5plus'] };
+  if (/arène|arena cristal/i.test(name))          return { counts:['5+'],         filterKeys:['5plus'] };
+  if (/corrompus létaux/i.test(name))             return { counts:['Solo'],        filterKeys:['solo'] };
+  if (/profondeurs/i.test(name))                  return { counts:['Duo','Trio'],  filterKeys:['duo','duo-trio'] };
+  if (/corrompus non létaux/i.test(name))         return { counts:['Solo'],        filterKeys:['solo'] };
+  if (/hellgates/i.test(name))                    return { counts:['Duo','5+'],    filterKeys:['duo','5plus'] };
+  if (/donjons aléatoires solo/i.test(name))      return { counts:['Solo'],        filterKeys:['solo'] };
+  if (/donjons aléatoires de groupe/i.test(name)) return { counts:['5+'],          filterKeys:['5plus'] };
+  if (/brumes/i.test(name))                       return { counts:['Solo','Duo'],  filterKeys:['solo','duo'] };
+  if (/knightfall/i.test(name))                   return { counts:['Solo','Duo'],  filterKeys:['solo','duo'] };
+  if (/brecilien/i.test(name))                    return { counts:['Solo','Duo'],  filterKeys:['solo','duo'] };
+  if (/avalon.*vert|vert.*avalon/i.test(name))    return { counts:['Solo'],        filterKeys:['solo'] };
+  if (/avalon.*bleu|bleu.*avalon/i.test(name))    return { counts:['5+'],          filterKeys:['5plus'] };
+  if (/avalon.*or|or.*avalon/i.test(name))        return { counts:['5+'],          filterKeys:['5plus'] };
+  if (/donjons statiques/i.test(name))            return { counts:['5+'],          filterKeys:['5plus'] };
+  if (/donjons avaloniens/i.test(name))           return { counts:['Raid'],        filterKeys:['raid'] };
+  if (/camps de monstres dynamiques/i.test(name)) return { counts:['Solo','5+'],   filterKeys:['solo','5plus'] };
+  if (/cachette de boss/i.test(name))             return { counts:['Solo','5+'],   filterKeys:['solo','5plus'] };
+  if (/missions de pistage/i.test(name))          return { counts:['Solo','5+'],   filterKeys:['solo','5plus'] };
   if (/contrebandier|cristaux d.énergie|noyaux de puissance/i.test(name)) return { counts:[], filterKeys:[] };
-  if (/créatures de cristal/i.test(name))        return { counts:['Solo','5+'], filterKeys:['solo','5plus'] };
+  if (/créatures de cristal/i.test(name))         return { counts:['Solo','5+'],   filterKeys:['solo','5plus'] };
   if (/renommée.*monstres.*monde ouvert/i.test(name)) return { counts:['Solo','5+'], filterKeys:['solo','5plus'] };
-  if (/récolter|attrapez|poissons|pêche/i.test(name)) return { counts:['Solo'],  filterKeys:['solo'] };
+  if (/récolter|attrapez|poissons|pêche/i.test(name)) return { counts:['Solo'],   filterKeys:['solo'] };
   return { counts:['Solo'], filterKeys:['solo'] };
 }
 
 function isSkip(name) {
-  return /Rang de Bronze|Rang d.Argent|Rang d.Or|Rang de Cristal|Noyaux de Puissance|Cristaux d.Énergie|Parfait État|Repaire/i.test(name);
+  return /Noyaux de Puissance|Cristaux d.Énergie|Parfait État/i.test(name);
 }
 
+// ── PRIORITÉ ──────────────────────────────────────────────────────────────────
 function priority(m) {
   if (m.skip)       return 9;
   if (m.levelMaxed) return 8;
+
+  // Missions "À faire" manuellement
+  if (/repaire/i.test(m.name)) return 3;
+
+  // Rangs — viendront automatiquement
+  if (/rang de bronze|rang d.argent|rang d.or|rang de cristal/i.test(m.name)) return 4;
+
   if (!m.progression) {
     if (m.niveau && isFinite(m.niveau.tot) && m.niveau.cur >= m.niveau.tot) return 8;
     return 7;
   }
+
   const pct = m.progression.pct;
   if (pct === null) return m.ptsGot > 0 ? 2 : 7;
   if (pct >= 0.93) return 0;
@@ -212,24 +292,28 @@ function priority(m) {
 
 function prioLabel(m) {
   const p = priority(m);
-  if (m.levelMaxed) return { lbl:'✅ Terminé',  cls:'b-maxed'  };
-  if (p === 9)      return { lbl:'Skip',            cls:'b-skip'   };
-  if (p === 0)      return { lbl:'⚡ Urgent',    cls:'b-urgent' };
-  if (p === 1)      return { lbl:'🔥 Efficace',  cls:'b-warn'   };
-  if (p === 2)      return { lbl:'✓ En cours',   cls:'b-good'   };
-  if (p === 7)      return { lbl:'Non débuté',   cls:'b-low'    };
-  return                   { lbl:'Skip',            cls:'b-skip'   };
+  if (m.levelMaxed) return { lbl:'✅ Terminé',     cls:'b-maxed'   };
+  if (p === 9)      return { lbl:'—',               cls:'b-skip'    };
+  if (p === 0)      return { lbl:'⚡ Urgent',       cls:'b-urgent'  };
+  if (p === 1)      return { lbl:'🔥 Efficace',     cls:'b-warn'    };
+  if (p === 2)      return { lbl:'✓ En cours',      cls:'b-good'    };
+  if (p === 3)      return { lbl:'💰 À faire',      cls:'b-limited' };
+  if (p === 4)      return { lbl:'🔄 Automatique',  cls:'b-auto'    };
+  if (p === 7)      return { lbl:'Non débuté',      cls:'b-low'     };
+  return                   { lbl:'—',               cls:'b-skip'    };
 }
 
-let DATA = null;
+// ── ÉTAT ──────────────────────────────────────────────────────────────────────
+let DATA       = null;
 let FILTER_KEY = 'all';
-let SORT = 'prio';
+let SORT       = 'prio';
 
+// ── RENDER PRINCIPAL ──────────────────────────────────────────────────────────
 function render(data) {
   DATA = data;
   if (data.timestamp) document.getElementById('last-update').textContent = 'Snapshot : ' + data.timestamp;
   const total = data.sections.reduce((s,c) => s + c.totalPts, 0);
-  document.getElementById('total-pts').textContent = total.toLocaleString();
+  document.getElementById('total-pts').textContent = total.toLocaleString('fr');
   renderStats(data.sections);
   renderUrgent(data.sections);
   renderMissions();
@@ -251,11 +335,14 @@ function renderStats(sections) {
 }
 
 function renderUrgent(sections) {
-  const el = document.getElementById('urgency');
+  const el   = document.getElementById('urgency');
   const list = document.getElementById('urg-list');
   const urgents = [];
   sections.forEach(s => s.missions.forEach(m => {
-    if (!m.skip && !m.levelMaxed && m.progression && m.progression.pct !== null && m.progression.pct >= 0.90) {
+    if (isSkip(m.name)) return;
+    if (/repaire|rang de/i.test(m.name)) return;
+    const lMaxed = m.niveau && m.niveau.tot !== null && isFinite(m.niveau.tot) && m.niveau.cur >= m.niveau.tot;
+    if (!lMaxed && m.progression && m.progression.pct !== null && m.progression.pct >= 0.90) {
       const rest = fmtNum(m.progression.tot - m.progression.cur);
       urgents.push(`<div class="urg-item">
         <div class="urg-dot"></div>
@@ -264,15 +351,129 @@ function renderUrgent(sections) {
       </div>`);
     }
   }));
-  if (urgents.length) {
-    el.style.display = 'block';
-    list.innerHTML = urgents.join('');
-  } else {
-    el.style.display = 'none';
-  }
+  el.style.display = urgents.length ? 'block' : 'none';
+  list.innerHTML = urgents.join('');
 }
 
+// ── CLASSEMENT ────────────────────────────────────────────────────────────────
+function renderRankings() {
+  const section = document.getElementById('rankings-out');
+  if (!section) return;
+  if (!INJECTED_RANKINGS || !INJECTED_RANKINGS.guilds) {
+    section.innerHTML = '';
+    return;
+  }
 
+  const guilds   = Array.isArray(INJECTED_RANKINGS.guilds)
+  ? INJECTED_RANKINGS.guilds
+  : (INJECTED_RANKINGS.guilds.value || []);
+
+const baseGuilds = INJECTED_BASELINE
+  ? (Array.isArray(INJECTED_BASELINE.guilds)
+      ? INJECTED_BASELINE.guilds
+      : (INJECTED_BASELINE.guilds.value || []))
+  : null;
+  const maxPts   = Math.max(...guilds.map(g => g.score || g.points || g.totalPoints || 0));
+
+  const myIdx = guilds.findIndex(g => (g.guildName || g.name || g.guild || '') === MY_GUILD);
+  const start = Math.max(0, myIdx - 3);
+  const end   = Math.min(guilds.length, myIdx + 4);
+  const around = guilds.slice(start, end);
+
+  function buildRow(g, i) {
+    const rank    = i + 1;
+    const name    = g.guildName || g.name || g.guild || '?';
+    const creator = g.creatorName || g.creator || '';
+    const pts     = g.score || g.points || g.totalPoints || 0;
+    const isMine  = name === MY_GUILD;
+
+    let basePts = null;
+    if (baseGuilds) {
+      const base = baseGuilds.find(b => (b.guildName || b.name || b.guild) === name);
+      if (base) basePts = base.score || base.points || base.totalPoints || 0;
+    }
+
+    const delta    = basePts !== null ? pts - basePts : null;
+    const deltaHtml = delta === null ? '<span class="dzero">—</span>'
+                    : delta > 0     ? `<span class="dpos">+${delta.toLocaleString('fr')}</span>`
+                    :                 '<span class="dzero">—</span>';
+
+    const refHtml  = basePts !== null ? basePts.toLocaleString('fr') : '—';
+    const barPct   = maxPts > 0 ? (pts / maxPts * 100).toFixed(0) : 0;
+    const rankCls  = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : '';
+    const rowCls   = isMine ? 'rank-mine' : '';
+
+    // Position (delta de rang)
+    let posHtml = '<span class="req">= stable</span>';
+    if (baseGuilds) {
+      const baseRank = baseGuilds.findIndex(b => (b.guildName || b.name || b.guild) === name) + 1;
+      if (baseRank > 0) {
+        const diff = baseRank - rank; // positif = monté
+        if (diff > 0)      posHtml = `<span class="rup">▲${diff}</span>`;
+        else if (diff < 0) posHtml = `<span class="rdn">▼${Math.abs(diff)}</span>`;
+      }
+    }
+
+    return `<tr class="${rowCls}">
+      <td><span class="rnum ${rankCls}">#${rank}</span></td>
+      <td><div class="rguild">${name}${isMine ? ' <span class="mine-badge">◄ NOUS</span>' : ''}</div>${creator ? `<div class="rcreator">${creator}</div>` : ''}</td>
+      <td class="rref r">${refHtml}</td>
+      <td class="rpts r">${pts.toLocaleString('fr')}</td>
+      <td class="rdelta r">${deltaHtml}</td>
+      <td class="rpos r">${posHtml}</td>
+      <td style="text-align:right"><div class="rbar-wrap"><div class="rbar-fill" style="width:${barPct}%;background:${isMine ? 'var(--purple)' : 'var(--muted)'}"></div></div></td>
+    </tr>`;
+  }
+
+  const aroundRows = around.map((g) => buildRow(g, guilds.indexOf(g))).join('');
+
+  const gapBefore = start;
+  const gapAfter  = guilds.length - end;
+
+  const sepBefore = gapBefore > 0
+    ? `<tr class="rank-sep"><td colspan="7">· · · ${gapBefore} équipe${gapBefore>1?'s':''} au-dessus · · ·</td></tr>`
+    : '';
+  const sepAfter = gapAfter > 0
+    ? `<tr class="rank-sep"><td colspan="7">· · · ${gapAfter} équipe${gapAfter>1?'s':''} en dessous · · ·</td></tr>`
+    : '';
+
+  const tsRef = INJECTED_BASELINE ? INJECTED_BASELINE.timestamp || '—' : '—';
+  const tsNow = INJECTED_RANKINGS.timestamp || '—';
+
+  section.innerHTML = `
+    <div class="rank-header">
+      <div class="rank-title">🏆 Classement général — Europe</div>
+      <div class="ts-block">
+        <div class="ts-item ts-ref">
+          <span class="ts-lbl">Référence (début de journée)</span>
+          <span class="ts-val">${tsRef}</span>
+        </div>
+        <div class="ts-divider"></div>
+        <div class="ts-item ts-now">
+          <span class="ts-lbl">Actuel (dernière capture)</span>
+          <span class="ts-val">${tsNow}</span>
+        </div>
+      </div>
+    </div>
+    <table class="rank-table">
+      <thead><tr>
+        <th style="width:36px">#</th>
+        <th>Guilde</th>
+        <th class="r">Ref.</th>
+        <th class="r">Actuel</th>
+        <th class="r">Aujourd'hui</th>
+        <th class="r">Position</th>
+        <th class="r">Part</th>
+      </tr></thead>
+      <tbody>
+        ${sepBefore}
+        ${aroundRows}
+        ${sepAfter}
+      </tbody>
+    </table>`;
+}
+
+// ── MISSIONS ──────────────────────────────────────────────────────────────────
 function getMissionType(m) {
   if (!m._mtype) m._mtype = missionType(m.name);
   return m._mtype;
@@ -281,23 +482,40 @@ function getMissionType(m) {
 function renderMissions() {
   if (!DATA) return;
   const out = document.getElementById('missions-out');
+
   let allMissions = [];
   DATA.sections.forEach(section => {
     section.missions.forEach(m => allMissions.push({ ...m, _cat: section.name }));
   });
+
   if (FILTER_KEY !== 'all') {
     allMissions = allMissions.filter(m => {
       const t = getMissionType(m);
       return t.filterKeys && t.filterKeys.includes(FILTER_KEY);
     });
   }
-  if (!allMissions.length) { out.innerHTML = '<div class="empty">Aucune mission pour ce filtre</div>'; return; }
+
+  if (!allMissions.length) {
+    out.innerHTML = '<div class="empty">Aucune mission pour ce filtre</div>';
+    return;
+  }
 
   allMissions.sort((a, b) => {
-    if (SORT === 'pct') { const pa = a.progression?.pct ?? -1; const pb = b.progression?.pct ?? -1; return pb - pa; }
+    if (SORT === 'pct') {
+      return (b.progression?.pct ?? -1) - (a.progression?.pct ?? -1);
+    }
     if (SORT === 'pts') return (b.ptsNext || 0) - (a.ptsNext || 0);
+
     const pa = priority(a), pb = priority(b);
     if (pa !== pb) return pa - pb;
+
+    // Tiebreaker 1 : niveau fini avant infini
+    const aFini = a.niveau && !(a.niveau.infinite === true || a.niveau.tot === null);
+    const bFini = b.niveau && !(b.niveau.infinite === true || b.niveau.tot === null);
+    if (aFini && !bFini) return -1;
+    if (!aFini && bFini) return 1;
+
+    // Tiebreaker 2 : alphabétique
     return a.name.localeCompare(b.name, 'fr');
   });
 
@@ -319,10 +537,9 @@ function renderMissions() {
 function renderRow(m) {
   const t = getMissionType(m);
 
-  // Toujours recalculer depuis le nom (ignore la valeur du JSON)
+  // Toujours recalculer depuis le nom
   m.skip = isSkip(m.name);
-
-  const niv = m.niveau;
+  const niv    = m.niveau;
   m.levelMaxed = niv && niv.tot !== null && niv.tot !== undefined && isFinite(niv.tot) && niv.cur >= niv.tot;
   m.levelZero  = niv && niv.cur === 0;
   m.levelInf   = niv && (niv.infinite === true || niv.tot === null || niv.tot === undefined);
@@ -330,6 +547,7 @@ function renderRow(m) {
   const catColor = CAT_COLOR[m._cat] || 'var(--muted)';
   const catLabel = `<div style="font-size:10px;color:${catColor};margin-top:2px;font-family:var(--mono)">${m._cat || ''}</div>`;
 
+  // Niveau
   let lvlHtml;
   if (!m.niveau)       lvlHtml = '<span class="lvl-pill lvl-zero">—</span>';
   else if (m.levelMaxed) lvlHtml = `<span class="lvl-pill lvl-maxed">✓ ${fmtNum(m.niveau.cur)}/${fmtNum(m.niveau.tot)}</span>`;
@@ -337,19 +555,20 @@ function renderRow(m) {
   else if (m.levelZero)  lvlHtml = `<span class="lvl-pill lvl-zero">niv. 0/${fmtNum(m.niveau.tot)}</span>`;
   else                   lvlHtml = `<span class="lvl-pill lvl-finite">niv. ${fmtNum(m.niveau.cur)}/${fmtNum(m.niveau.tot)}</span>`;
 
+  // Progression
   let progHtml;
   if (m.levelMaxed) {
     progHtml = '<span class="prog-none">palier maximal atteint</span>';
   } else if (!m.progression) {
     progHtml = '<span class="prog-none">—</span>';
   } else {
-    const pct = m.progression.pct;
+    const pct    = m.progression.pct;
     const pctNum = pct !== null ? pct : 0;
-    const color = pctNum >= 0.90 ? 'var(--urgent)' : pctNum >= 0.70 ? 'var(--warn)' : pctNum >= 0.35 ? 'var(--good)' : 'var(--muted)';
+    const color  = pctNum >= 0.90 ? 'var(--urgent)' : pctNum >= 0.70 ? 'var(--warn)' : pctNum >= 0.35 ? 'var(--good)' : 'var(--muted)';
     const pctTxt = pct !== null ? (pct*100).toFixed(0)+'%' : '?';
-    const cur = fmtNum(m.progression.cur);
-    const tot = m.progression.infinite ? '∞' : fmtNum(m.progression.tot);
-    const barW = pct !== null ? Math.min(100, pctNum*100).toFixed(0) : 0;
+    const cur    = fmtNum(m.progression.cur);
+    const tot    = m.progression.infinite ? '∞' : fmtNum(m.progression.tot);
+    const barW   = pct !== null ? Math.min(100, pctNum*100).toFixed(0) : 0;
     progHtml = `<div class="prog-cell">
       <div class="prog-bar"><div class="prog-fill" style="width:${barW}%;background:${color}"></div></div>
       <span class="prog-txt">${cur} / ${tot}</span>
@@ -357,20 +576,22 @@ function renderRow(m) {
     </div>`;
   }
 
+  // Badges joueurs
   let joueursHtml = '';
   if (!m.levelMaxed && !m.skip && t.counts && t.counts.length > 0) {
     const badgeStyle = {
-      'Solo':    'background:rgba(74,143,255,.1);color:#4a8fff;border-color:rgba(74,143,255,.3)',
-      'Duo':     'background:rgba(245,166,35,.1);color:#f5a623;border-color:rgba(245,166,35,.3)',
-      'Trio':    'background:rgba(48,201,126,.1);color:#30c97e;border-color:rgba(48,201,126,.3)',
-      '5+':      'background:rgba(169,126,255,.1);color:#a97eff;border-color:rgba(169,126,255,.3)',
-      'Raid':    'background:rgba(232,121,249,.1);color:#e879f9;border-color:rgba(232,121,249,.3)',
+      'Solo':  'background:rgba(74,143,255,.1);color:#4a8fff;border-color:rgba(74,143,255,.3)',
+      'Duo':   'background:rgba(245,166,35,.1);color:#f5a623;border-color:rgba(245,166,35,.3)',
+      'Trio':  'background:rgba(48,201,126,.1);color:#30c97e;border-color:rgba(48,201,126,.3)',
+      '5+':   'background:rgba(169,126,255,.1);color:#a97eff;border-color:rgba(169,126,255,.3)',
+      'Raid': 'background:rgba(232,121,249,.1);color:#e879f9;border-color:rgba(232,121,249,.3)',
     };
     joueursHtml = `<div style="display:flex;gap:4px;flex-wrap:wrap">${
       t.counts.map(c => `<span style="display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;border:1px solid;${badgeStyle[c]||''}">${c}</span>`).join('')
     }</div>`;
   }
 
+  // Statut
   const { lbl: statusLbl, cls: statusCls } = prioLabel(m);
   const statusBadge = `<span class="badge ${statusCls}">${statusLbl}</span>`;
 
@@ -388,6 +609,7 @@ function renderRow(m) {
   </tr>`;
 }
 
+// ── CONTRÔLES ─────────────────────────────────────────────────────────────────
 function setfilter(key, el) {
   FILTER_KEY = key;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -399,7 +621,7 @@ function resort() {
   renderMissions();
 }
 
-// Auto-refresh : vérifie les mises à jour toutes les 2 minutes
+// ── AUTO-REFRESH ──────────────────────────────────────────────────────────────
 let lastTimestamp = null;
 async function checkForUpdates() {
   try {
@@ -407,20 +629,22 @@ async function checkForUpdates() {
     const html = await r.text();
     const match = html.match(/"timestamp":"([^"]+)"/);
     if (!match) return;
-    const newTimestamp = match[1];
-    if (lastTimestamp === null) { lastTimestamp = newTimestamp; return; }
-    if (newTimestamp !== lastTimestamp) { lastTimestamp = newTimestamp; location.reload(); }
+    const newTs = match[1];
+    if (lastTimestamp === null) { lastTimestamp = newTs; return; }
+    if (newTs !== lastTimestamp) { lastTimestamp = newTs; location.reload(); }
   } catch(_) {}
 }
 setInterval(checkForUpdates, 2 * 60 * 1000);
 
+// ── INIT ──────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   if (typeof INJECTED_DATA !== 'undefined' && INJECTED_DATA && INJECTED_DATA.sections) {
     lastTimestamp = INJECTED_DATA.timestamp || null;
     render(INJECTED_DATA);
+    renderRankings();
   } else {
     document.getElementById('last-update').textContent = 'En attente des données (lancer scraper.ps1)';
-    document.getElementById('total-pts').textContent = '—';
+    document.getElementById('total-pts').textContent   = '—';
   }
 });
 </script>
